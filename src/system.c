@@ -1,7 +1,7 @@
 /*
 	system.c
 
-	System specific code for dpmaster
+	System specific code for opensand-master
 
 	Copyright (C) 2008-2011  Mathieu Olivier
 

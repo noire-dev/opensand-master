@@ -1,7 +1,7 @@
 /*
 	servers.c
 
-	Server list and address mapping management for dpmaster
+	Server list and address mapping management for opensand-master
 
 	Copyright (C) 2004-2011  Mathieu Olivier
 
@@ -557,10 +557,10 @@ server_t* Sv_GetByAddr (const struct sockaddr_storage* address, socklen_t addrle
 			if ((ntohl (addr_in->sin_addr.s_addr) >> 24) == 127 &&
 				addrmap == NULL)
 			{
-				Com_Printf (MSG_WARNING,
+				/*Com_Printf (MSG_WARNING,
 							"> WARNING: server %s isn't allowed (loopback address without address mapping)\n",
 							peer_address);
-				return NULL;
+				return NULL;*/
 			}
 		}
 		else
@@ -573,10 +573,10 @@ server_t* Sv_GetByAddr (const struct sockaddr_storage* address, socklen_t addrle
 			if (memcmp (&addr_in6->sin6_addr.s6_addr, &in6addr_loopback.s6_addr,
 						sizeof(addr_in6->sin6_addr.s6_addr)) == 0)
 			{
-				Com_Printf (MSG_WARNING,
+				/*Com_Printf (MSG_WARNING,
 							"> WARNING: server %s isn't allowed (IPv6 loopback address)\n",
 							peer_address);
-				return NULL;
+				return NULL;*/
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 /*
 	games.h
 
-	Games management for dpmaster
+	Games management for opensand-master
 
 	Copyright (C) 2009-2010  Mathieu Olivier
 
@@ -35,10 +35,6 @@ qboolean Game_IsAccepted (const char* game_name);
 
 
 // ---------- Public constants (game properties) ---------- //
-
-// Heartbeat tag for the DarkPlaces protocol
-#define HEARTBEAT_DARKPLACES	"DarkPlaces"
-
 
 // ---------- Public types (game properties) ---------- //
 

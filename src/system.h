@@ -1,7 +1,7 @@
 /*
 	system.h
 
-	System specific code for dpmaster
+	System specific code for opensand-master
 
 	Copyright (C) 2008-2011  Mathieu Olivier
 
@@ -29,9 +29,9 @@
 
 // The default name of the log file
 #ifdef WIN32
-#	define DEFAULT_LOG_FILE "dpmaster.log"
+#	define DEFAULT_LOG_FILE "opensand-master.log"
 #else
-#	define DEFAULT_LOG_FILE "/var/log/dpmaster.log"
+#	define DEFAULT_LOG_FILE "/var/log/opensand-master.log"
 #endif
 
 // The maximum number of listening sockets

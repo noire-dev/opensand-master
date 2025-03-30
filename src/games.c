@@ -1,7 +1,7 @@
 /*
 	games.c
 
-	Games management for dpmaster
+	Games management for opensand-master
 
 	Copyright (C) 2009-2010  Mathieu Olivier
 
@@ -149,9 +149,7 @@ qboolean Game_IsAccepted (const char* game_name)
 // ---------- Private constants ---------- //
 
 // Gamenames
-#define GAMENAME_Q3A	"Quake3Arena"	// Quake 3 Arena
-#define GAMENAME_RTCW	"wolfmp"		// Return to Castle Wolfenstein
-#define GAMENAME_WOET	"et"			// Wolfenstein: Enemy Territory
+#define GAMENAME_OPENSAND	"OpenSandbox"	// OpenSandbox
 
 
 // ---------- Private types (game properties) ---------- //
@@ -387,10 +385,6 @@ static cmdline_status_t Game_UpdateHeartbeat (game_properties_t* game_props, hea
 	}
 	else
 	{
-		// The tag used by the DarkPlaces protocol is reserved
-		if (strcmp (value, HEARTBEAT_DARKPLACES) == 0)
-			return CMDLINE_STATUS_INVALID_OPT_PARAMS;
-
 		// You can't have more than one heartbeat tag for each type
 		if (game_props->heartbeats[hb_type] != NULL)
 			return CMDLINE_STATUS_INVALID_OPT_PARAMS;
@@ -539,38 +533,15 @@ void Game_InitProperties (void)
 
 	builtin_props_t builtin_props_array [] =
 	{
-		// Quake 3 Arena
+		// OpenSandbox
 		{
-			GAMENAME_Q3A,
+			GAMENAME_OPENSAND,
 			2,
 			{
-				"protocols=66,67,68",
-				"heartbeat=QuakeArena-1",
+				"protocols=68,71",
+				"heartbeat=OpenSandbox",
 			},
-		},
-
-		// Return to Castle Wolfenstein
-		{
-			GAMENAME_RTCW,
-			3,
-			{
-				"protocols=50,59,60",
-				"heartbeat=Wolfenstein-1",
-				"flatline=WolfFlatline-1",
-			},
-		},
-
-		// Wolfenstein: Enemy Territory
-		{
-			GAMENAME_WOET,
-			4,
-			{
-				"protocols=72,80,83,84",
-				"options=send-empty-servers,send-full-servers",
-				"heartbeat=EnemyTerritory-1",
-				"flatline=ETFlatline-1",
-			},
-		},
+		}
 
 	};
 

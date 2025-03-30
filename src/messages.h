@@ -1,7 +1,7 @@
 /*
 	messages.h
 
-	Message management for dpmaster
+	Message management for opensand-master
 
 	Copyright (C) 2004-2009  Mathieu Olivier
 

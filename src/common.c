@@ -2,7 +2,7 @@
 /*
 	common.c
 
-	Utility functions for dpmaster
+	Utility functions for opensand-master
 
 	Copyright (C) 2008-2011  Mathieu Olivier
 

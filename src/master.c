@@ -307,7 +307,7 @@ static void PrintBanner (void)
 	{
 		Com_Printf (MSG_NORMAL,
 					"\n"
-					"dpmaster, an open master server\n"
+					"opensand-master, an open master server\n"
 					"(version: " VERSION ", compiled: " __DATE__ " at " __TIME__ ")\n");
 
 		banner_printed = true;

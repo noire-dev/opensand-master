@@ -1,7 +1,7 @@
 /*
 	messages.c
 
-	Message management for dpmaster
+	Message management for opensand-master
 
 	Copyright (C) 2004-2012  Mathieu Olivier
 
@@ -45,7 +45,6 @@
 // Types of messages (with samples):
 
 // Q3: "heartbeat QuakeArena-1\x0A"
-// DP: "heartbeat DarkPlaces\x0A"
 #define S2M_HEARTBEAT "heartbeat "
 
 // Q3 & DP & QFusion: "getinfo A_Challenge"
@@ -55,9 +54,6 @@
 #define S2M_INFORESPONSE "infoResponse\x0A"
 
 // Q3: "getservers 67 ffa empty full"
-// DP: "getservers DarkPlaces-Quake 3 empty full"
-// DP: "getservers Transfusion 3 empty full"
-// QFusion: "getservers qfusion 39 empty full"
 #define C2M_GETSERVERS "getservers "
 
 // DP: "getserversExt DarkPlaces-Quake 3 empty full ipv4 ipv6"
@@ -251,43 +247,32 @@ static void HandleHeartbeat (const char* msg, const struct sockaddr_storage* add
 
 	// Extract the tag
 	sscanf (msg, "%63s", tag);
-	Com_Printf (MSG_NORMAL, "> %s ---> heartbeat (%s)\n",
-				peer_address, tag);
+	Com_Printf (MSG_NORMAL, "> %s ---> heartbeat (%s)\n", peer_address, tag);
 
-	// If it's not a game that uses the DarkPlaces protocol
-	if (strcmp (tag, HEARTBEAT_DARKPLACES) != 0)
+	game_props = Game_GetPropertiesByHeartbeat (tag, &flatlineHeartbeat);
+	if (game_props == NULL)
 	{
-		game_props = Game_GetPropertiesByHeartbeat (tag, &flatlineHeartbeat);
-		if (game_props == NULL)
-		{
-			Com_Printf (MSG_WARNING,
-						"> WARNING: Rejecting heartbeat from %s (heartbeat \"%s\" is unknown)\n",
-						peer_address, tag);
-			return;
-		}
-
-		Com_Printf (MSG_DEBUG, "  - belongs to game \"%s\"\n",
-					game_props->name);
-
-		// Ignore flatline (shutdown) heartbeats
-		if (flatlineHeartbeat)
-		{
-			Com_Printf (MSG_NORMAL, "  - flatline heartbeat (ignored)\n");
-			return;
-		}
-
-		// If the game isn't accepted on this server, ignore the heartbeat
-		if (! Game_IsAccepted (game_props->name))
-		{
-			Com_Printf (MSG_WARNING,
-						"> WARNING: Rejecting heartbeat from %s (game \"%s\" is not accepted)\n",
-						peer_address, game_props->name);
-			return;
-		}
+		Com_Printf (MSG_WARNING,
+					"> WARNING: Rejecting heartbeat from %s (heartbeat \"%s\" is unknown)\n",
+					peer_address, tag);
+		return;
 	}
-	else
-		game_props = NULL;
-
+	Com_Printf (MSG_DEBUG, "  - belongs to game \"%s\"\n",
+				game_props->name);
+	// Ignore flatline (shutdown) heartbeats
+	if (flatlineHeartbeat)
+	{
+		Com_Printf (MSG_NORMAL, "  - flatline heartbeat (ignored)\n");
+		return;
+	}
+	// If the game isn't accepted on this server, ignore the heartbeat
+	if (! Game_IsAccepted (game_props->name))
+	{
+		Com_Printf (MSG_WARNING,
+					"> WARNING: Rejecting heartbeat from %s (game \"%s\" is not accepted)\n",
+					peer_address, game_props->name);
+		return;
+	}
 	// Get the server in the list (add it to the list if necessary)
 	server = Sv_GetByAddr (addr, addrlen, true);
 	if (server == NULL)
